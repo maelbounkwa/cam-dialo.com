@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Charcoal - CAM DIALO</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f4; }
+    header, footer { background: #2e7d32; color: white; text-align: center; padding: 1em; }
+    .main { padding: 2em; max-width: 800px; margin: auto; background: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    .product-image { width: 100%; height: auto; border-radius: 10px; margin-bottom: 20px; }
+    .buy-button { background: #2e7d32; color: white; padding: 0.7em 1.5em; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; text-decoration: none; }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+      position: relative;
+    }
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #aaa;
+      cursor: pointer;
+    }
+    .payment-option {
+      margin-top: 20px;
+      padding: 10px;
+      border: 2px solid #2e7d32;
+      border-radius: 8px;
+      font-weight: bold;
+      color: #2e7d32;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .payment-option:hover {
+      background-color: #e0f2e9;
+    }
+    .payment-info {
+      margin-top: 15px;
+      font-size: 16px;
+      background: #e8f5e9;
+      padding: 10px;
+      border-radius: 8px;
+      display: none;
+    }
+    .form-group {
+      margin-top: 15px;
+      text-align: left;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .whatsapp-button {
+      margin-top: 20px;
+      background-color: #25d366;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CAM DIALO - Charcoal Product Page</h1>
+  </header>
+
+  <div class="main">
+    <div class="product-image">
+      <img src="file:///C:/Users/PC/Pictures/charcoal.PNG" alt="Charcoal Product" style="width:50%; border-radius: 10px;" />
+    </div>
+    <h2>Charcoal</h2>
+    <p>
+      Sustainable charcoal created from recycled plastic waste. Ideal for household and industrial energy needs.
+    </p>
+    <p><strong>Price:</strong> 300FCFA per kg</p>
+    <button class="buy-button" onclick="openModal()">Purchase Now</button>
+  </div>
+
+  <!-- Modal -->
+  <div id="paymentModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h3>Select Payment Method</h3>
+      <div class="payment-option" onclick="showPaymentInfo('MTN')">MTN Mobile Money (MoMo)</div>
+      <div class="payment-option" onclick="showPaymentInfo('Orange')">Orange Money</div>
+      <div id="paymentInfo" class="payment-info"></div>
+
+      <!-- Order Form -->
+      <div class="form-group">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" placeholder="Enter your name">
+      </div>
+      <div class="form-group">
+        <label for="quantity">Quantity (kg):</label>
+        <input type="number" id="quantity" placeholder="Enter quantity">
+      </div>
+      <div class="form-group">
+        <label for="location">Delivery Location:</label>
+        <textarea id="location" rows="2" placeholder="Enter your delivery location"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="contact">Contact Number:</label>
+        <input type="tel" id="contact" placeholder="Enter your phone number">
+      </div>
+
+      <button class="whatsapp-button" onclick="sendWhatsAppOrder()">Confirm via WhatsApp</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 CAM DIALO. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function openModal() {
+      document.getElementById("paymentModal").style.display = "block";
+      document.getElementById("paymentInfo").style.display = "none";
+    }
+
+    function closeModal() {
+      document.getElementById("paymentModal").style.display = "none";
+    }
+
+    function showPaymentInfo(method) {
+      const infoBox = document.getElementById("paymentInfo");
+      if (method === 'MTN') {
+        infoBox.innerHTML = "<strong>MTN MoMo Number:</strong> 653 76 91 79<br><strong>NAME:</strong> URBAIN DJEUMO";
+      } else if (method === 'Orange') {
+        infoBox.innerHTML = "<strong>Orange Money Number:</strong> 687 34 75 79<br><strong>NAME:</strong> BOUNKWA MAEL";
+      }
+      infoBox.style.display = "block";
+    }
+
+    function sendWhatsAppOrder() {
+      const name = document.getElementById("name").value;
+      const quantity = document.getElementById("quantity").value;
+      const location = document.getElementById("location").value;
+      const contact = document.getElementById("contact").value;
+
+      const message = `Hello, I would like to order Charcoal.\n\nName: ${name}\nQuantity: ${quantity} kg\nDelivery Location: ${location}\nContact Number: ${contact}`;
+      const whatsappURL = `https://wa.me/237653769179?text=${encodeURIComponent(message)}`;
+      window.open(whatsappURL, '_blank');
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById("paymentModal");
+      if (event.target === modal) {
+        closeModal();
+      }
+    }
+  </script>
+</body>
+</html>
